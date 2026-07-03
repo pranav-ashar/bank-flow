@@ -37,6 +37,18 @@ bank_records = {
     }
 }
 
+#Login
+def login():
+    account_num = int(input("Enter Account Number : "))
+    if account_num in bank_records:
+        return account_num
+    else:
+        print("Invalid Account Number")
+        
+
+
+
+
 #Account Balance
 def acc_bal(acc_no):
     print("ACCOUNT BALANCE")
@@ -94,8 +106,42 @@ def transfer_money(acc_no):
             print("Invalid Amount")
     else:
         print("Incorrect Account Number")
+        
+#Program Run
+account_num = login()
+print()
+print(f"Welcome, {bank_records[account_num]["name"]}")
+print()
 
-
-
-
+#Menu
+while True:
+    print("""-------ATM-------
+1) Check Balance
+2) Deposit Money 
+3) Withdraw Money 
+4) Transfer Money
+5) Mini Statement
+6) Change Pin 
+7) Logout
+-----------------
+""")
+    user_response = int(input("User Response : "))
+    if(user_response == 1):
+        print("Check Balance")
+    elif(user_response == 2):
+        print("Deposit")
+    elif(user_response == 3):
+        print("Withdraw Money")
+    elif(user_response == 4):
+        print("Transfer Money")
+    elif(user_response == 5):
+        print("Mini Statement")
+    elif(user_response == 6):
+        print("Change Pin")
+    elif(user_response == 7):
+        print("Withdraw Money")
+    else:
+        print("Invalid Response")
+    
+ 
 
