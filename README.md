@@ -1,6 +1,6 @@
 # Bank Flow
 
-A menu-driven Python ATM simulator with core banking operations.
+A menu-driven Python banking app with core banking operations.
 1) Balance Check
 2) Deposit Money
 3) Withdraw Money
