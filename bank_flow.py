@@ -98,6 +98,7 @@ def deposit(acc_no):
         transactions[acc_no].update({"Deposited : + " : deposit_amt})
         print(f"The Amount of $ {deposit_amt} has added succesfully to your account")
         print("-------------------")
+        transactions[acc_no].update({"Deposit Money" : deposit_amt})
         operation()
     else:
         print("Invalid Amount Entered")
@@ -152,7 +153,15 @@ def transfer_money(acc_no):
             print("Invalid Amount")
     else:
         print("Incorrect Account Number")
-        
+
+# Mini Statement
+def mini_statement(acc_no):
+    print("-------------------")
+    print("MINI STATEMENT")
+    print(transactions[acc_no])
+    print("-------------------")
+    operation()
+
 #Menu
 def menu(acc_no):
     acc_no = account_num
@@ -177,7 +186,7 @@ def menu(acc_no):
     elif(user_response == 4):
         transfer_money(acc_no)
     elif(user_response == 5):
-        print()
+        mini_statement(acc_no)
     elif(user_response == 6):
         pin_change(acc_no)
     elif(user_response == 7):
