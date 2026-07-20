@@ -46,24 +46,29 @@ bank_records = {
             
 def login():
     while True:
-        global account_num
-        account_num = int(input("Enter Account Number : "))
-        if account_num in bank_records:
-            
-            print()
-            print(f"Welcome, {bank_records[account_num]["name"]}")
-            print()
-            menu(account_num)
+        global card_num
+        number = int(input("Enter Card Number : 1234 5678 910"))
+        card_num = 123456789100 + number
+        if card_num in bank_records:
+            password = int(input("Enter Pin : "))
+            if password == bank_records[card_num]["pin"]:
+                print()
+                print(f"Welcome, {bank_records[card_num]["name"]}")
+                print()
+                menu(card_num)
+            else:
+                print("Invalid Pin")
+                print()
             
             
         else:
-            print("Invalid Account Number")
+            print("Invalid Card Number")
             print()
 
 
 #Account Balance
 def acc_bal(acc_no):
-    acc_no = account_num
+    acc_no = card_num
     
     print("-------------------")
     print("ACCOUNT BALANCE")
@@ -95,6 +100,7 @@ def withdraw(acc_no):
     balance_new = (bank_records[acc_no]["balance"]) - withdrawl_amt
     if (balance_new >= 500):
         bank_records[acc_no].update({"balance" : balance_new})
+        bank_records[acc_no]["transactions"].append(f"Withdrew : - ${withdrawl_amt}")
         print(f"The Amount of $ {withdrawl_amt} has succesfully withdrawn from your account")
         print("-------------------")
         operation()
@@ -107,9 +113,10 @@ def pin_change(acc_no):
     print("-------------------")
     prev_pin = int(input("Enter Previous Pin : "))
     if(prev_pin == bank_records[acc_no]["pin"]):
-        new_pin = input("Enter New Pin : ")
+        new_pin = int(input("Enter New Pin : "))
         bank_records[acc_no].update({"pin" : new_pin})
         print("The Pin has been Updated")
+        bank_records[acc_no]["transactions"].append(f"Pin Changed")
         print("-------------------")
         operation()
     else:
@@ -118,7 +125,7 @@ def pin_change(acc_no):
 
 #Transfer Money
 def transfer_money(acc_no):
-    transfer_acc = int(input("Enter Account Number of Trasnsferee : "))
+    transfer_acc = int(input("Enter Card Number of Transfer recipient : "))
     if transfer_acc in bank_records:
         print(f"Account holder Name : {bank_records[transfer_acc]["name"]}")
         transfer_amt = int(input("Enter Amount to Transfer : "))
@@ -128,28 +135,32 @@ def transfer_money(acc_no):
             if(balance_new_transferer >= 500):
                 bank_records[transfer_acc].update({"balance":balance_new_trasferee})
                 bank_records[acc_no].update({"balance":balance_new_transferer})
+                bank_records[acc_no]["transactions"].append(f"Transferred : - ${transfer_amt}")
+                bank_records[transfer_acc]["transactions"].append(f"Received : + ${transfer_amt}")
                 print(f"The amount of $ {transfer_amt} has been transferred to {bank_records[transfer_acc]["name"]}")
                 print()
                 operation()
             else:
+                print()
                 print("Insufficient Balance")
+                print("Session Expired")
         else:
             print("Invalid Amount")
     else:
-        print("Incorrect Account Number")
+        print("Incorrect Card Number")
 
 # Mini Statement
 def mini_statement(acc_no):
     print("-------------------")
     print("MINI STATEMENT")
-    for item in bank_records[acc_no]["transactions"]:
+    for item in bank_records[acc_no]["transactions"][-5:]:  # Display last 5 transactions   
         print(item)
     print("-------------------")
     operation()
 
 #Menu
 def menu(acc_no):
-    acc_no = account_num
+    acc_no = card_num
     print("""-------ATM-------
 1) Check Balance
 2) Deposit Money 
@@ -191,7 +202,7 @@ Would you like another transaction?
     user_response = int(input("User Response : "))
     if(user_response == 1):
         print()
-        menu(account_num)
+        menu(card_num)
     elif(user_response == 2):
             print()
             logout()
@@ -199,6 +210,9 @@ Would you like another transaction?
         print("Invalid Response")
         
 def logout():
+    print("Thank you for using our services")
+    print("---------------------------------")
+    print()
     login()
         
         
