@@ -5,59 +5,43 @@ bank_records = {
     {
         "name" : "Charlie Chaplin",
         "pin" : 1889,
-        "balance" : 10000
+        "balance" : 10000,
+        "transactions" : []
     },
     
     123456789102 : 
     {
         "name" : "Napoleon Bonaparte",
         "pin" : 1769,
-        "balance" : 120000
+        "balance" : 120000,
+        "transactions" : []
     },
     
     123456789103 : 
     {
         "name" : "Adolf Hitler",
         "pin" : 1889,
-        "balance" : 500000
+        "balance" : 500000,
+        "transactions" : []
     },
     
     123456789104 : 
     {
         "name" : "William Shakespeare",
         "pin" : 1564,
-        "balance" : 5000
+        "balance" : 5000,
+        "transactions" : [] 
     },
     
     123456789105 : 
     {
         "name" : "Pablo Escobar",
         "pin" : 1949,
-        "balance" : 1000000
+        "balance" : 1000000,
+        "transactions" : []
     }
 }
-#Transaction History
-transactions = {
-    123456789101 : 
-    {
-    },
-    
-    123456789102 : 
-    {
-    },
-    
-    123456789103 : 
-    {
-    },
-    
-    123456789104 : 
-    {
-    },
-    
-    123456789105 : 
-    {
-    }
-}
+
 
             
 def login():
@@ -95,10 +79,10 @@ def deposit(acc_no):
     if (deposit_amt > 0):
         balance_new = (bank_records[acc_no]["balance"]) + deposit_amt
         bank_records[acc_no].update({"balance" : balance_new})
-        transactions[acc_no].update({"Deposited : + " : deposit_amt})
-        print(f"The Amount of $ {deposit_amt} has added succesfully to your account")
+        bank_records[acc_no]["transactions"].append(f"Deposited : + ${deposit_amt}")
+        print(f"The Amount of $ {deposit_amt} is added succesfully to your account")
         print("-------------------")
-        transactions[acc_no].update({"Deposit Money" : deposit_amt})
+        
         operation()
     else:
         print("Invalid Amount Entered")
@@ -158,7 +142,8 @@ def transfer_money(acc_no):
 def mini_statement(acc_no):
     print("-------------------")
     print("MINI STATEMENT")
-    print(transactions[acc_no])
+    for item in bank_records[acc_no]["transactions"]:
+        print(item)
     print("-------------------")
     operation()
 
