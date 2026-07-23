@@ -125,27 +125,34 @@ def pin_change(acc_no):
 
 #Transfer Money
 def transfer_money(acc_no):
-    transfer_acc = int(input("Enter Card Number of Transfer recipient : "))
+    # transfer_acc = int(input("Enter Card Number of Transfer recipient : "))
+    number = int(input("Enter Card Number : 1234 5678 910"))
+    transfer_acc = 123456789100 + number
     if transfer_acc in bank_records:
-        print(f"Account holder Name : {bank_records[transfer_acc]["name"]}")
-        transfer_amt = int(input("Enter Amount to Transfer : "))
-        if (transfer_amt > 0):
-            balance_new_trasferee = bank_records[transfer_acc]["balance"] + transfer_amt
-            balance_new_transferer = bank_records[acc_no]["balance"] - transfer_amt
-            if(balance_new_transferer >= 500):
-                bank_records[transfer_acc].update({"balance":balance_new_trasferee})
-                bank_records[acc_no].update({"balance":balance_new_transferer})
-                bank_records[acc_no]["transactions"].append(f"Transferred : - ${transfer_amt}")
-                bank_records[transfer_acc]["transactions"].append(f"Received : + ${transfer_amt}")
-                print(f"The amount of $ {transfer_amt} has been transferred to {bank_records[transfer_acc]["name"]}")
-                print()
-                operation()
-            else:
-                print()
-                print("Insufficient Balance")
-                print("Session Expired")
+        if transfer_acc == acc_no:
+            print("You cannot transfer money to your own account")
+            operation()
         else:
-            print("Invalid Amount")
+
+            print(f"Account holder Name : {bank_records[transfer_acc]["name"]}")
+            transfer_amt = int(input("Enter Amount to Transfer : "))
+            if (transfer_amt > 0):
+                balance_new_trasferee = bank_records[transfer_acc]["balance"] + transfer_amt
+                balance_new_transferer = bank_records[acc_no]["balance"] - transfer_amt
+                if(balance_new_transferer >= 500):
+                    bank_records[transfer_acc].update({"balance":balance_new_trasferee})
+                    bank_records[acc_no].update({"balance":balance_new_transferer})
+                    bank_records[acc_no]["transactions"].append(f"Transferred : - ${transfer_amt}")
+                    bank_records[transfer_acc]["transactions"].append(f"Received : + ${transfer_amt}")
+                    print(f"The amount of $ {transfer_amt} has been transferred to {bank_records[transfer_acc]["name"]}")
+                    print()
+                    operation()
+                else:
+                    print()
+                    print("Insufficient Balance")
+                    print("Session Expired")
+            else:
+                print("Invalid Amount")
     else:
         print("Incorrect Card Number")
 
@@ -214,11 +221,8 @@ def logout():
     print("---------------------------------")
     print()
     login()
-        
-        
 
 #Program Run
-
 login()
 
 
